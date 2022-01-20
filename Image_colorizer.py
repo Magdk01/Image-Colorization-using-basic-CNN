@@ -9,7 +9,7 @@ from skimage.color import rgb2lab, lab2rgb
 
 # Saved weights for the CNN model - Can be any of the trained weights matching Main generation 1.1.
 # If other generations are required the Generator Class will need to be updated as well
-PATH = './Main_Gen1.1_Model_10Epochs_places365_valset_JB.pth'
+PATH = './Trained_Models/Main_Gen1.1_Model_10Epochs_places365_valset_JB.pth'
 
 # Color saturation multiplier
 ColorSat_Multiplier = 2

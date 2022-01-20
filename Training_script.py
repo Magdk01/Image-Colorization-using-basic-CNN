@@ -20,7 +20,7 @@ learning_rate = 0.001
 
 # PATH should be changed for each training as to not overwrite previous tranings.
 # Todo make automatic naming shceme
-PATH = './Main_Gen1.1_Model_1Epoch_hackeddataset_MSVN.pth'
+PATH = './Trained_Models/Main_Gen1.1_Model_1Epoch_hackeddataset_MSVN.pth'
 
 # PATH is also the PATH that has to be used in generator to test the model on more images
 
