@@ -8,6 +8,8 @@ from PIL import Image
 from skimage.color import rgb2lab, lab2rgb
 import os, time
 from torch.utils.data import Dataset
+import wandb
+
 
 # These are the main variables to change if you don't want to poke around in the code.
 
@@ -18,9 +20,11 @@ epochs = 1
 # Learning_rate is the rate of which the optimizer is allowed to change the weights and biases
 learning_rate = 0.001
 
+
+
 # PATH should be changed for each training as to not overwrite previous tranings.
 # Todo make automatic naming shceme
-PATH = './Trained_Models/Main_Gen1.1_Model_1Epoch_hackeddataset_MSVN.pth'
+PATH = './Trained_Models/wandb_test1.pth'
 
 # PATH is also the PATH that has to be used in generator to test the model on more images
 
@@ -68,15 +72,21 @@ class CustomDataset123(Dataset):
 # Both of the training sets. CustomDataset123 contains 4.700 images, but requires aditional setup to run.
 # Places365 is the generic dataset provided directly from torchvision and can be downloaded in-code.
 
-# trainset = CustomDataset123(image_paths=train_image_paths, transform=transform)
-trainset = torchvision.datasets.Places365(root='./data', split='val', small=True, download=False,
-                                          transform=transform)
+trainset = CustomDataset123(image_paths=train_image_paths, transform=transform)
+# trainset = torchvision.datasets.Places365(root='./data', split='val', small=True, download=False,
+#                                           transform=transform)
 
 # The loader works for both datasets, however num_workers has to be set to 0, for CustomDataset123,
 # until pickling has been fixed
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=2)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=0)
 
 if __name__ == '__main__':
+    # wandb.init(project="my-test-project", entity="mangus")
+    # wandb.config = {
+    #     "learning_rate": learning_rate,
+    #     "epochs": epochs,
+    #     "batch_size": batch_size
+    # }
 
     # If a cuda device is avaliable, the traning will prioritize this device
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -203,6 +213,12 @@ if __name__ == '__main__':
             if i % 250 == 0:
                 print(f'Epoch = {epoch}, I = {i},  Loss: {total_loss / 250}, Time: {time.time() - start_time}')
                 total_loss = 0
+
+            # #wandb integration
+            # wandb.log({"loss": loss})
+            #
+            # # Optional
+            # wandb.watch(gen)
 
         # Below is the code for plotting the training progress over epochs.
         epoch_loss_list.append(epoch_loss / 4700)

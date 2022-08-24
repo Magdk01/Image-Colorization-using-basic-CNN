@@ -101,6 +101,7 @@ if __name__ == '__main__':
     # Helper function to seperate L*-channel and A*B*-Channel.
     # Then forwarding through the model and contecating the layers to create a displayable RGB image
     # For more information either read the belonging raport of the commens of the main.py of image processing
+    # TODO acutally write the rapport...
     def process_image(LAB_array, img_size):
         width, height = img_size
         L_array = LAB_array[..., 0]
